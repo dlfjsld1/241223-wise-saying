@@ -18,15 +18,16 @@ class App {
 
         while(true) {
             System.out.print("명령) ");
-            String command = scanner.nextLine();
-            if (command.equals("등록")) {
-                System.out.print("명언 : ");
-                String saying = scanner.nextLine(); // 입력값 가져옴. 입력값이 없으면 기다림.
-                System.out.print("작가 : ");
-                String author = scanner.nextLine(); // 입력값 가져옴. 입력값이 없으면 기다림.
-                System.out.println("1번 명언이 등룍되었습니다.");
-            } else if(command.equals("종료")) {
+            String command = scanner.nextLine(); // 입력값 가져옴. 입력값이 없으면 기다림.
+            if(command.equals("종료")) {
+                System.out.println("명언 앱을 종료합니다.");
                 break;
+            } else if (command.equals("등록")) {
+                System.out.print("명언 : ");
+                String saying = scanner.nextLine();
+                System.out.print("작가 : ");
+                String author = scanner.nextLine();
+                System.out.println("1번 명언이 등룍되었습니다.");
             }
         }
     }
