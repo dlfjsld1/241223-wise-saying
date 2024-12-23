@@ -32,6 +32,14 @@ class Quote {
     public String getAuthor() {
         return author;
     }
+
+    public void setSaying(String saying) {
+        this.saying = saying;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
 }
 
 class App {
@@ -49,10 +57,12 @@ class App {
                 break;
             } else if (command.equals("등록")) {
                 register();
-            } else if(command.startsWith("삭제")) {
-                delete(command);
             } else if (command.equals("목록")) {
                 list();
+            } else if(command.startsWith("수정")) {
+                revise(command);
+            } else if(command.startsWith("삭제")) {
+                delete(command);
             }
         }
     }
@@ -75,6 +85,36 @@ class App {
         System.out.println(lastNo + "번 명언이 등록되었습니다.");
     }
 
+    //수정
+    public void revise(String command) {
+        String strId = command.replace("수정?id=", "");
+        try {
+            int id = Integer.parseInt(strId);
+            boolean isFound = false;
+            for(int i = dic.size() -1; i >= 0; i--) {
+                Quote qNow = dic.get(i);
+                if (qNow.getId() == id) {
+                    isFound = true;
+                    Scanner scanner = new Scanner(System.in);
+                    System.out.println("명언(기존) : " + qNow.getSaying());
+                    System.out.print("명언 : ");
+                    String newSaying = scanner.nextLine();
+                    qNow.setSaying(newSaying);
+                    System.out.println("작가(기존) : " + qNow.getAuthor());
+                    System.out.print("작가 : ");
+                    String newAuthor = scanner.nextLine();
+                    qNow.setAuthor(newAuthor);
+                    break;
+                }
+            }
+            if (!isFound) {
+            System.out.println(id + "번 명언은 존재하지 않습니다.");
+            }
+        } catch(Exception e) {
+            System.out.println("올바르지 않은 id입니다.");
+        }
+    }
+
     //삭제
     public void delete(String command) {
         String strId = command.replace("삭제?id=", "");
@@ -86,7 +126,7 @@ class App {
                     System.out.println(id + "번 명언이 삭제되었습니다.");
                     break;
                 }
-            System.out.println("올바른 id를 입력해 주세요.");
+            System.out.println(id + "번 명언은 존재하지 않습니다.");
             }
         } catch(Exception e) {
             System.out.println("올바르지 않은 id입니다.");
