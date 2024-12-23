@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -10,11 +11,12 @@ public class Main {
 }
 
 class App {
+    private static ArrayList<Quote> dic = new ArrayList<>();
+
     public void run() {
-
         Scanner scanner = new Scanner(System.in);
-
         System.out.println("== 명언 앱 ==");
+        int lastNo = 0;
 
         while(true) {
             System.out.print("명령) ");
@@ -27,12 +29,34 @@ class App {
                 String saying = scanner.nextLine();
                 System.out.print("작가 : ");
                 String author = scanner.nextLine();
-                System.out.println("1번 명언이 등룍되었습니다.");
+                Quote quote = new Quote(++lastNo, saying, author);
+                dic.add(quote);
+                System.out.println(lastNo + "번 명언이 등록되었습니다.");
             }
         }
     }
+}
 
-    public void insert(String saying, String author) {
+class Quote {
+    int id;
+    String saying;
+    String author;
 
+    public Quote(int id, String saying, String author) {
+        this.id = id;
+        this.saying = saying;
+        this.author = author;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getSaying() {
+        return saying;
+    }
+
+    public String getAuthor() {
+        return author;
     }
 }
