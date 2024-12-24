@@ -82,7 +82,7 @@ class App {
         addLastNo();
         Quote quote = new Quote(lastNo, saying, author);
         dic.add(quote);
-        System.out.println(lastNo + "번 명언이 등록되었습니다.");
+        System.out.println("%d번 명언이 등록되었습니다.".formatted(lastNo));
     }
 
     //수정
