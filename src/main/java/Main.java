@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import com.google.gson.Gson;
 
 public class Main {
     public static void main(String[] args) {
@@ -57,20 +58,22 @@ class App {
         addLastNo();
         Quote quote = new Quote(lastId, content, author);
         dic.add(quote);
+        saveQuoteFile(quote);
         System.out.println("%d번 명언이 등록되었습니다.".formatted(lastId));
     }
 
     //파일저장
-//    private void saveQuoteFile(Quote quote) {
-//        try {
-//          Path path = Paths.get("db/wiseSaying", quote.getId() + ".json");
-//          Files.createDirectories(path.getParent());
-//          String json = gson.toJson(quote);
-//          Files.writeString(path, json);
-//        } catch(Exception e) {
-//            System.out.println("명언 저장이 실패했습니다: %s".formatted(e));
-//        }
-//    }
+    private void saveQuoteFile(Quote quote) {
+        try {
+          Path path = Paths.get("db/wiseSaying", quote.getId() + ".json");
+          Files.createDirectories(path.getParent());
+          Gson gson = new Gson();
+          String json = gson.toJson(quote);
+          Files.writeString(path, json);
+        } catch(Exception e) {
+            System.out.println("명언 저장이 실패했습니다: %s".formatted(e));
+        }
+    }
 
     //수정
     public void revise(String command) {
