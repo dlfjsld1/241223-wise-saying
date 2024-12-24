@@ -60,7 +60,7 @@ class App {
         System.out.println("%d번 명언이 등록되었습니다.".formatted(lastId));
     }
 
-//    //파일저장
+    //파일저장
 //    private void saveQuoteFile(Quote quote) {
 //        try {
 //          Path path = Paths.get("db/wiseSaying", quote.getId() + ".json");
@@ -82,11 +82,11 @@ class App {
                 Quote qNow = dic.get(i);
                 if (qNow.getId() == id) {
                     isFound = true;
-                    System.out.println("명언(기존) : " + qNow.getContent());
+                    System.out.println("명언(기존) : %s".formatted(qNow.getContent()));
                     System.out.print("명언 : ");
                     String newSaying = scanner.nextLine();
                     qNow.setContent(newSaying);
-                    System.out.println("작가(기존) : " + qNow.getAuthor());
+                    System.out.println("작가(기존) : %s".formatted(qNow.getAuthor()));
                     System.out.print("작가 : ");
                     String newAuthor = scanner.nextLine();
                     qNow.setAuthor(newAuthor);
@@ -135,9 +135,9 @@ class App {
 }
 
 class Quote {
-    int id;
-    String content;
-    String author;
+    private int id;
+    private String content;
+    private String author;
 
     public Quote(int id, String content, String author) {
         this.id = id;
