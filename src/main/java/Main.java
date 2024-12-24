@@ -12,12 +12,12 @@ public class Main {
 
 class Quote {
     int id;
-    String saying;
+    String content;
     String author;
 
-    public Quote(int id, String saying, String author) {
+    public Quote(int id, String content, String author) {
         this.id = id;
-        this.saying = saying;
+        this.content = content;
         this.author = author;
     }
 
@@ -25,16 +25,16 @@ class Quote {
         return id;
     }
 
-    public String getSaying() {
-        return saying;
+    public String getContent() {
+        return content;
     }
 
     public String getAuthor() {
         return author;
     }
 
-    public void setSaying(String saying) {
-        this.saying = saying;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public void setAuthor(String author) {
@@ -76,11 +76,11 @@ class App {
     public void register() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("명언 : ");
-        String saying = scanner.nextLine();
+        String content = scanner.nextLine();
         System.out.print("작가 : ");
         String author = scanner.nextLine();
         addLastNo();
-        Quote quote = new Quote(lastNo, saying, author);
+        Quote quote = new Quote(lastNo, content, author);
         dic.add(quote);
         System.out.println("%d번 명언이 등록되었습니다.".formatted(lastNo));
     }
@@ -96,10 +96,10 @@ class App {
                 if (qNow.getId() == id) {
                     isFound = true;
                     Scanner scanner = new Scanner(System.in);
-                    System.out.println("명언(기존) : " + qNow.getSaying());
+                    System.out.println("명언(기존) : " + qNow.getContent());
                     System.out.print("명언 : ");
                     String newSaying = scanner.nextLine();
-                    qNow.setSaying(newSaying);
+                    qNow.setContent(newSaying);
                     System.out.println("작가(기존) : " + qNow.getAuthor());
                     System.out.print("작가 : ");
                     String newAuthor = scanner.nextLine();
@@ -138,7 +138,7 @@ class App {
         System.out.println("번호 / 작가 / 명언");
         System.out.println("----------------------");
         for(int i = dic.size() - 1; i >= 0; i--) {
-            String line = dic.get(i).getId() + " / " + dic.get(i).getAuthor()  + " / " + dic.get(i).getSaying();
+            String line = dic.get(i).getId() + " / " + dic.get(i).getAuthor()  + " / " + dic.get(i).getContent();
             System.out.println(line);
         }
     }
