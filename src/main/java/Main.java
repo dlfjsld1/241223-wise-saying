@@ -13,44 +13,12 @@ public class Main {
     }
 }
 
-class Quote {
-    int id;
-    String content;
-    String author;
-
-    public Quote(int id, String content, String author) {
-        this.id = id;
-        this.content = content;
-        this.author = author;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-}
-
 class App {
+    Scanner scanner = new Scanner(System.in);
     private static ArrayList<Quote> dic = new ArrayList<>();
     private int lastNo = 0;
 
     public void run() {
-        Scanner scanner = new Scanner(System.in);
         System.out.println("== 명언 앱 ==");
         while(true) {
             System.out.print("명령) ");
@@ -77,7 +45,6 @@ class App {
 
     //등록
     public void register() {
-        Scanner scanner = new Scanner(System.in);
         System.out.print("명언 : ");
         String content = scanner.nextLine();
         System.out.print("작가 : ");
@@ -110,7 +77,6 @@ class App {
                 Quote qNow = dic.get(i);
                 if (qNow.getId() == id) {
                     isFound = true;
-                    Scanner scanner = new Scanner(System.in);
                     System.out.println("명언(기존) : " + qNow.getContent());
                     System.out.print("명언 : ");
                     String newSaying = scanner.nextLine();
@@ -133,15 +99,19 @@ class App {
     //삭제
     public void delete(String command) {
         String strId = command.replace("삭제?id=", "");
+        boolean isFound = false;
         try {
             int id = Integer.parseInt(strId);
             for(int i = dic.size() -1; i >= 0; i--) {
                 if (dic.get(i).getId() == id) {
+                    isFound = true;
                     dic.remove(i);
                     System.out.println(id + "번 명언이 삭제되었습니다.");
                     break;
                 }
-            System.out.println(id + "번 명언은 존재하지 않습니다.");
+            }
+            if (!isFound) {
+                System.out.println(id + "번 명언은 존재하지 않습니다.");
             }
         } catch(Exception e) {
             System.out.println("올바르지 않은 id입니다.");
@@ -159,3 +129,34 @@ class App {
     }
 }
 
+class Quote {
+    int id;
+    String content;
+    String author;
+
+    public Quote(int id, String content, String author) {
+        this.id = id;
+        this.content = content;
+        this.author = author;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+}
