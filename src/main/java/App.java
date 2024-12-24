@@ -1,16 +1,18 @@
 import com.google.gson.Gson;
 
+import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Stream;
 
 public class App {
     Scanner scanner = new Scanner(System.in);
     private static final List<Quote> dic = new ArrayList<>();
-//    private int lastId = 0;
     Path lastIdPath = Path.of("db/wiseSaying", "lastId.txt");
 
     public void run() {
@@ -29,6 +31,8 @@ public class App {
                 revise(command);
             } else if(command.startsWith("삭제")) {
                 delete(command);
+            } else if(command.equals("초기화")) {
+                reset();
             }
         }
     }
@@ -181,6 +185,22 @@ public class App {
         for(int i = quotes.size() - 1; i >= 0; i--) {
             String line = "%d / %s / %s".formatted(quotes.get(i).getId(), quotes.get(i).getAuthor(), quotes.get(i).getContent());
             System.out.println(line);
+        }
+    }
+
+    public void reset() {
+        Path path = Path.of("db/wiseSaying");
+        try(Stream<Path> files = Files.list(path)) {
+            files.forEach(file -> {
+                try {
+                    Files.delete(file);
+                } catch (IOException e) {
+                    System.err.println("파일 삭제 실패: " + file + ": " + e);
+                }
+            });
+            System.out.println("초기화 완료");
+        } catch(Exception e) {
+            System.err.println("파일 삭제 실패: " + e);
         }
     }
 }
