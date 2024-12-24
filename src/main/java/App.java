@@ -6,13 +6,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Stream;
 
 public class App {
     Scanner scanner = new Scanner(System.in);
-    private static final List<Quote> dic = new ArrayList<>();
     Path lastIdPath = Path.of("db/wiseSaying", "lastId.txt");
 
     public void run() {
@@ -31,6 +31,8 @@ public class App {
                 revise(command);
             } else if(command.startsWith("삭제")) {
                 delete(command);
+            } else if(command.equals("빌드")) {
+                build();
             } else if(command.equals("초기화")) {
                 reset();
             }
@@ -188,6 +190,38 @@ public class App {
         }
     }
 
+    //빌드
+    public void build() {
+        List<Quote> dataList = new ArrayList<>();
+        Path jsonPaths =Path.of("db/wiseSaying");
+        Path dataPath = Path.of("db/wiseSaying/data.json");
+        Gson gson = new Gson();
+        if(!Files.exists(jsonPaths)) {
+            System.out.println("명언이 존재하지 않습니다.");
+            return;
+        }
+        try {
+           Files.list(jsonPaths)
+                   .filter(path -> path.toString().endsWith(".json") && !path.endsWith("data.json"))
+                   .forEach(eachPath -> {
+                       try {
+                            String jsonString = Files.readString(eachPath);
+                            Quote quote = gson.fromJson(jsonString, Quote.class);
+                            dataList.add(quote);
+                       } catch(Exception e) {
+                           System.out.println("오류가 발생했습니다: %s".formatted(e));
+                       }
+                   });
+           dataList.sort(Comparator.comparingInt(Quote::getId));
+           String dataJson = gson.toJson(dataList);
+           Files.writeString(dataPath, dataJson);
+            System.out.println("data.json 파일의 내용이 갱신되었습니다.");
+        } catch(Exception e) {
+            System.out.println("오류가 발생했습니다: %s".formatted(e));
+        }
+    }
+
+    //초기화
     public void reset() {
         Path path = Path.of("db/wiseSaying");
         try(Stream<Path> files = Files.list(path)) {
