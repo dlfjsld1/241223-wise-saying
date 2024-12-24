@@ -15,10 +15,15 @@ public class Main {
 
 class App {
     Scanner scanner = new Scanner(System.in);
-    private static ArrayList<Quote> dic = new ArrayList<>();
-    private int lastNo = 0;
+    private static final ArrayList<Quote> dic = new ArrayList<>();
+    private int lastId = 0;
 
     public void run() {
+        //테스트 명언 데이터1
+        Quote quoteTestOne = new Quote(++lastId, "꿈을 지녀라. 그러면 어려운 현실을 이길 수 있다.", "월트 디즈니");
+        Quote quoteTestTwo = new Quote(++lastId, "꿈을 지니지마라. 그러면 어려운 현실을 이길 수 없다.", "반전된 월트 디즈니");
+        dic.add(quoteTestOne);
+        dic.add(quoteTestTwo);
         System.out.println("== 명언 앱 ==");
         while(true) {
             System.out.print("명령) ");
@@ -40,7 +45,7 @@ class App {
 
     //마지막에 추가한 번호 추가
     public void addLastNo() {
-        this.lastNo++;
+        this.lastId++;
     }
 
     //등록
@@ -50,15 +55,15 @@ class App {
         System.out.print("작가 : ");
         String author = scanner.nextLine();
         addLastNo();
-        Quote quote = new Quote(lastNo, content, author);
+        Quote quote = new Quote(lastId, content, author);
         dic.add(quote);
-        System.out.println("%d번 명언이 등록되었습니다.".formatted(lastNo));
+        System.out.println("%d번 명언이 등록되었습니다.".formatted(lastId));
     }
 
 //    //파일저장
 //    private void saveQuoteFile(Quote quote) {
 //        try {
-//          Path path = Paths.get(DB_PATH, quote.getId() + ".json");
+//          Path path = Paths.get("db/wiseSaying", quote.getId() + ".json");
 //          Files.createDirectories(path.getParent());
 //          String json = gson.toJson(quote);
 //          Files.writeString(path, json);
