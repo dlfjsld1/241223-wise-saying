@@ -1,3 +1,6 @@
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -85,6 +88,18 @@ class App {
         System.out.println("%d번 명언이 등록되었습니다.".formatted(lastNo));
     }
 
+//    //파일저장
+//    private void saveQuoteFile(Quote quote) {
+//        try {
+//          Path path = Paths.get(DB_PATH, quote.getId() + ".json");
+//          Files.createDirectories(path.getParent());
+//          String json = gson.toJson(quote);
+//          Files.writeString(path, json);
+//        } catch(Exception e) {
+//            System.out.println("명언 저장이 실패했습니다: %s".formatted(e));
+//        }
+//    }
+
     //수정
     public void revise(String command) {
         String strId = command.replace("수정?id=", "");
@@ -138,7 +153,7 @@ class App {
         System.out.println("번호 / 작가 / 명언");
         System.out.println("----------------------");
         for(int i = dic.size() - 1; i >= 0; i--) {
-            String line = dic.get(i).getId() + " / " + dic.get(i).getAuthor()  + " / " + dic.get(i).getContent();
+            String line = "%d / %s / %s".formatted(dic.get(i).getId(), dic.get(i).getAuthor(), dic.get(i).getContent());
             System.out.println(line);
         }
     }
