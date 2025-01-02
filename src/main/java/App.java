@@ -106,6 +106,10 @@ public class App {
 
     //수정
     public void revise(String command) {
+        if (command == null || command.isEmpty()) {
+            System.out.println("입력된 id가 올바르지 않거나 비어 있습니다.");
+            return;
+        }
         String strId = command.replace("수정?id=", "");
         Gson gson = new Gson();
         try {
@@ -139,6 +143,10 @@ public class App {
 
     //삭제
     public void delete(String command) {
+        if (command == null || command.isEmpty()) {
+            System.out.println("입력된 id가 올바르지 않거나 비어 있습니다.");
+            return;
+        }
         String strId = command.replace("삭제?id=", "");
         try {
             int id = Integer.parseInt(strId);
@@ -190,7 +198,6 @@ public class App {
         }
     }
 
-    //빌드
     public void build() {
         List<Quote> dataList = new ArrayList<>();
         Path jsonPaths =Path.of("db/wiseSaying");
